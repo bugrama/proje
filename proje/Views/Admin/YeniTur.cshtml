@@ -1,0 +1,21 @@
+﻿@model proje.Models.Siniflar.Turlar
+@{
+    ViewBag.Title = "YeniTur";
+    Layout = "~/Views/Shared/_Adminlayout.cshtml";
+}
+
+<h2>YeniTur</h2>
+<br />
+<form class="form-group" method="post">
+    @Html.LabelFor(x => x.Baslik)
+    @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Aciklama)
+    @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Resim)
+    @Html.TextBoxFor(x => x.Resim, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-primary">Ekle</button>
+</form>
+

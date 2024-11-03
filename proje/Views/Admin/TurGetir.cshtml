@@ -1,0 +1,26 @@
+﻿@model proje.Models.Siniflar.Turlar
+@{
+    ViewBag.Title = "TurGetir";
+    Layout = "~/Views/Shared/_Adminlayout.cshtml";
+}
+
+<h2>Güncelleme</h2>
+<br />
+@using (Html.BeginForm("TurGuncelle", "Admin", FormMethod.Post))
+{
+    @Html.LabelFor(x => x.Id)
+    @Html.TextBoxFor(x => x.Id, new { @class = "form-control",@readonly="readonly" })
+    <br />
+    @Html.LabelFor(x => x.Baslik)
+    @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Resim)
+    @Html.TextBoxFor(x => x.Resim, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Aciklama)
+    @Html.TextAreaFor(x => x.Aciklama,15,1, new { @class = "form-control" })
+    <br />
+
+    <button class="btn btn-success">Güncelle</button>
+}
+

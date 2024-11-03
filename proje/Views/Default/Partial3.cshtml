@@ -1,0 +1,17 @@
+﻿@using proje.Models.Siniflar
+@model List<Turlar>
+
+
+<div class="padding">
+    <h4>En Popüler 5 Tur</h4>
+    
+    <ul class="list list-pad">
+        @{ int i = 0;}
+        @foreach (var x in Model)
+        {
+        <li class="list-bg"><span>@{i++;}@i.</span><a href="/Turlar/TurDetay/@x.Id">@x.Baslik</a></li>
+        }
+    </ul>
+    <a href="/Turlar/Index/" class="link1">Diğer Turlarımız</a>
+</div>
+

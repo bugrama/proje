@@ -1,0 +1,35 @@
+﻿@using proje.Models.Siniflar
+@model List<Turlar>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Adminlayout.cshtml";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("Index", "Admin", FormMethod.Post))
+{
+    <p>
+        Tur ismi:@Html.TextBox("p")
+        <input type="submit" value="Find" />
+    </p>
+}
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Baslik</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+    </tr>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <th>@x.Id</th>
+            <th>@x.Baslik</th>
+            <th> <a href="/Admin/TurGetir/@x.Id" class="btn btn-warning">Güncelle</a> </th>
+            <th> <a href="/Admin/TurSil/@x.Id" class="btn btn-danger">Sil</a> </th>
+        </tr>
+    }
+
+</table>
+<a href="/Admin/YeniTur/" class="btn btn-primary">Yeni Tur</a>

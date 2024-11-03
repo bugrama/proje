@@ -1,0 +1,23 @@
+﻿@using proje.Models.Siniflar
+@model List<Turlar>
+
+
+<div class="padding1">
+    <h4>Önerilerimiz</h4>
+
+    <div class="box-left">
+        @foreach (var x in Model)
+        {
+            <div class="bot-img">
+                <a href="/Turlar/TurDetay/@x.Id"><img src="@x.Resim" style="width:100px;height:65px;" alt="" /></a>
+            </div>
+            <div class="bot-desc">
+                <p>@x.Aciklama.Substring(0, 80)... </p>
+            </div>
+            <div class="clear"></div>
+        }
+    </div>
+
+    @Html.Action("Partial5", "Default");
+</div>
+
