@@ -11,10 +11,13 @@ namespace proje.Models.Siniflar
         [Key]
         public int Id { get; set; }
         public string Baslik { get; set; }
-        public string Tarih { get; set; }
+        public DateTime BaslangicTarihi { get; set; } = DateTime.Now;
+        public DateTime BitisTarihi { get; set; } = DateTime.Now;
         public string Aciklama { get; set; }
-        public string Resim {  get; set; }
-        public ICollection < Yorumlar> Yorumlars { get; set; }
-
+        public string Resim { get; set; }
+        public ICollection<Yorumlar> Yorumlars { get; set; }
+        
+        public string Tags { get; set; }
+        public int Kontenjan { get; set; }
     }
 }

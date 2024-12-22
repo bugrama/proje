@@ -6,16 +6,41 @@
 
 <h2>YeniTur</h2>
 <br />
-<form class="form-group" method="post">
+<form class="form-group" method="post" enctype="multipart/form-data">
     @Html.LabelFor(x => x.Baslik)
     @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Kontenjan)
+    @Html.TextBoxFor(x => x.Kontenjan, new { @class = "form-control" })
     <br />
     @Html.LabelFor(x => x.Aciklama)
     @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control" })
     <br />
     @Html.LabelFor(x => x.Resim)
-    @Html.TextBoxFor(x => x.Resim, new { @class = "form-control" })
+    @Html.TextBoxFor(x => x.Resim, new { @class = "form-control", @id = "resimUrl", @disabled = "disabled" })
+    <br />
+    @Html.Label("Resim Yükle")
+    <input type="file" name="ResimDosyasi" class="form-control" id="resimDosyasi" />
+    <br />
+    @Html.Label("URL ile yükle")
+    <input type="checkbox" id="urlCheckbox" onclick="toggleResimInput()" />
+    <br />
+
+    <script type="text/javascript">function toggleResimInput() {
+        var urlCheckbox = document.getElementById("urlCheckbox");
+        var resimUrl = document.getElementById("resimUrl");
+        var resimDosyasi = document.getElementById("resimDosyasi");
+
+        if (urlCheckbox.checked) {
+            resimUrl.disabled = false;
+            resimDosyasi.disabled = true;
+        } else {
+            resimUrl.disabled = true;
+            resimDosyasi.disabled = false;
+        }
+    }</script>
     <br />
     <button class="btn btn-primary">Ekle</button>
 </form>
+
 

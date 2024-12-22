@@ -4,29 +4,27 @@
     Layout = "~/Views/Shared/_Testlayout.cshtml";
 }
 
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Personal Blog a Blogging Category Flat Bootstarp  Responsive Website Template | Single :: w3layouts</title>
-    <link href="~/web2/css/bootstrap.css" rel='stylesheet' type='text/css' />
-    <link href="~/web2/css/style.css" rel='stylesheet' type='text/css' />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Personal Blog Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
-	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!----webfonts---->
-    <link href='http://fonts.googleapis.com/css?family=Oswald:100,400,300,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,300italic' rel='stylesheet' type='text/css'>
-    <!----//webfonts---->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    
+    <head>
+        <title>Personal Blog a Blogging Category Flat Bootstarp  Responsive Website Template | Single :: w3layouts</title>
+        <link href="~/web2/css/bootstrap.css" rel='stylesheet' type='text/css' />
+        <link href="~/web2/css/style.css" rel='stylesheet' type='text/css' />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="Personal Blog Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+    Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <!----webfonts---->
+        <link href='http://fonts.googleapis.com/css?family=Oswald:100,400,300,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,300italic' rel='stylesheet' type='text/css'>
+        <!----//webfonts---->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    strapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
     <!---header---->
@@ -41,10 +39,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     @foreach (var x in Model.Deger1)
                     {
                         <img src="@x.Resim" alt="" style="margin-bottom:20px" />
-                        <h2>@x.Baslik</h2>
+                        <h2>@x.Baslik <span style="border: 1px solid #000; padding: 5px; float: right;">Kontenjan: @x.Kontenjan</span></h2>
                         <p>
                             @x.Aciklama
                         </p>
+
                     }
                 </div>
                 @foreach (var y in Model.Deger2)
@@ -60,14 +59,96 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </ul>
 
                 }
+                <!-- Yorum bölümünün üstüne ekleyin -->
+                <button id="siparisVerButton" class="btn btn-primary">Sipariş Ver</button>
 
-                @Html.Action("YorumYap","Turlar")
+                
+                <!-- Sipariş Ver Pop-up Modal -->
+                <div id="siparisVerModal" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Sipariş Ver</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="siparisForm">
+                                    <div class="form-group">
+                                        <label for="isim">İsim</label>
+                                        <input type="text" class="form-control" id="isim" name="isim" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefon">Telefon</label>
+                                        <input type="text" class="form-control" id="telefon" name="telefon" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kisi">Kişi Sayısı</label>
+                                        <input type="number" class="form-control" id="kisi" name="kisi" required>
+                                    </div>
+                                    @foreach (var x in Model.Deger1)
+                                    {
+                                        <input type="hidden" id="turId" name="turId" value="@x.Id">
+                                    }
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                <button type="button" class="btn btn-primary" id="siparisSubmitButton">Sipariş Ver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @Html.Action("YorumYap", "Turlar")
             </div>
 
             <div class="clearfix"></div>
         </div>
     </div>
-    
-  </body>
-</html> 
+
+    <script>
+    $(document).ready(function() {
+        $('#siparisVerButton').click(function() {
+            $('#siparisVerModal').modal('show');
+        });
+
+        $('#siparisSubmitButton').click(function() {
+            var formData = {
+                isim: $('#isim').val(),
+                email: $('#email').val(),
+                telefon: $('#telefon').val(),
+                kisi: $('#kisi').val(),
+                turId: $('#turId').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SiparisVer", "Turlar")',
+                data: formData,
+                success: function(response) {
+                    if (response.success) {
+                        alert('Sipariş başarıyla verildi!');
+                        $('#siparisVerModal').modal('hide');
+                    } else {
+                        alert('Sipariş verirken bir hata oluştu: ' + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('Sipariş verirken bir hata oluştu: ' + error);
+                }
+            });
+        });
+    });
+    </script>
+
+
+</body>
+</html>
 

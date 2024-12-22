@@ -1,0 +1,57 @@
+﻿@using proje.Models.Siniflar
+@model List<proje.Models.Siparisler>
+@{
+    ViewBag.Title = "Siparislistesi";
+    Layout = "~/Views/Shared/_Adminlayout.cshtml";
+}
+
+<h2>Siparislistesi</h2>
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Tur id</th>
+        <th>İsim</th>
+        <th>Email</th>
+        <th>Telefon</th>
+        <th>Kişi sayısı</th>
+        <th>Güncelle</th>
+        <th>Sil</th>
+    </tr>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.Id</td>
+            <td>@x.TurId</td>
+            <td>@x.Isim</td>
+            <td>@x.Email</td>
+            <td>@x.Telefon</td>
+            <td>@x.Kisi</td>
+            <td><button class="btn btn-warning" onclick="onaylaSiparis(@x.Id)">Onayla</button></td>
+            <td><a href="/Admin/SiparisSil/@x.Id" class="btn btn-danger">Redded</a></td>
+
+        </tr>
+    }
+</table>
+
+<script>
+    function onaylaSiparis(id) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SiparisOnayla", "Admin")',
+            data: { id: id },
+            success: function(response) {
+                if (response.success) {
+                    alert('Sipariş başarıyla onaylandı!');
+                    location.reload();
+                } else {
+                    alert('Sipariş onaylanırken bir hata oluştu: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Sipariş onaylanırken bir hata oluştu: ' + error);
+            }
+        });
+    }
+</script>

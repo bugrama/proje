@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Adminlayout.cshtml";
 }
 
+<!-- Bootstrap CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap Datepicker CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
 <h2>Index</h2>
 @using (Html.BeginForm("Index", "Admin", FormMethod.Post))
 {
@@ -18,18 +23,93 @@
     <tr>
         <th>Id</th>
         <th>Baslik</th>
-        <th>Sil</th>
+        <th>Baslangıc Tarihi</th>
+        <th>Bitiş Tarihi</th>
+        <th>Etiketler</th>
         <th>Güncelle</th>
+        <th>Sil</th>
     </tr>
     @foreach (var x in Model)
     {
         <tr>
             <th>@x.Id</th>
             <th>@x.Baslik</th>
+            <th> <button class="btn btn-warning" onclick="openModal(@x.Id, '@x.BaslangicTarihi.ToString("yyyy-MM-dd")')">Güncelle</button>@x.BaslangicTarihi.ToString("dd/MM/yyyy") </th>
+            <th> @x.BitisTarihi.ToString("dd/MM/yyyy") </th>
+            <th> @x.Tags) </th>
             <th> <a href="/Admin/TurGetir/@x.Id" class="btn btn-warning">Güncelle</a> </th>
             <th> <a href="/Admin/TurSil/@x.Id" class="btn btn-danger">Sil</a> </th>
         </tr>
     }
-
 </table>
 <a href="/Admin/YeniTur/" class="btn btn-primary">Yeni Tur</a>
+
+<!-- Modal -->
+<div id="updateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tarih Güncelle</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("TurTarihGuncelle", "Admin", FormMethod.Post))
+                {
+                    @Html.Hidden("Id", "", new { id = "turId" })
+                    <div class="form-group">
+                        @Html.Label("Başlangıç Tarihi")
+                        <div class="input-group date" id="startDatePicker">
+                            @Html.TextBox("BaslangicTarihi", "", new { @class = "form-control", type = "text", id = "turBaslangicTarihi" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Bitiş Tarihi")
+                        <div class="input-group date" id="endDatePicker">
+                            @Html.TextBox("BitisTarihi", "", new { @class = "form-control", type = "text", id = "turBitisTarihi" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Güncelle</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#startDatePicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            startDate: new Date()
+        });
+
+        $('#endDatePicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true,
+            startDate: new Date()
+        });
+    });
+
+    function openModal(id, baslangicTarihi, bitisTarihi) {
+        $('#turId').val(id);
+        $('#turBaslangicTarihi').val(baslangicTarihi);
+        $('#turBitisTarihi').val(bitisTarihi);
+        $('#updateModal').modal('show');
+    }
+</script>

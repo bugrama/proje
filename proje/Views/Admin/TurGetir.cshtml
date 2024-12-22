@@ -9,16 +9,49 @@
 @using (Html.BeginForm("TurGuncelle", "Admin", FormMethod.Post))
 {
     @Html.LabelFor(x => x.Id)
-    @Html.TextBoxFor(x => x.Id, new { @class = "form-control",@readonly="readonly" })
+    @Html.TextBoxFor(x => x.Id, new { @class = "form-control", @readonly = "readonly" })
     <br />
     @Html.LabelFor(x => x.Baslik)
     @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control" })
     <br />
+    @Html.LabelFor(x => x.Kontenjan)
+    @Html.TextBoxFor(x => x.Kontenjan, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.Tags)
+    @Html.TextBoxFor(x => x.Tags, new { @class = "form-control" })
+    <br />
     @Html.LabelFor(x => x.Resim)
-    @Html.TextBoxFor(x => x.Resim, new { @class = "form-control" })
+    @Html.TextBoxFor(x => x.Resim, new { @class = "form-control", @id = "resimUrl" })
+    <input type="file" name="ResimDosyasi" class="form-control" id="resimDosyasi" />
+    <br />
+    <label>
+        <input type="checkbox" id="urlCheckbox" name="resimSecim" value="url" onclick="toggleResimSecim('url')"> URL ile yükle
+    </label>
+    <label>
+        <input type="checkbox" id="dosyaCheckbox" name="resimSecim" value="dosya" onclick="toggleResimSecim('dosya')"> Dosya ile yükle
+    </label>
+
+    <script type="text/javascript">
+        function toggleResimSecim(secim) {
+            var urlCheckbox = document.getElementById('urlCheckbox');
+            var dosyaCheckbox = document.getElementById('dosyaCheckbox');
+            var resimUrl = document.getElementById('resimUrl');
+            var resimDosyasi = document.getElementById('resimDosyasi');
+
+            if (secim === 'url') {
+                dosyaCheckbox.checked = false;
+                resimUrl.disabled = false;
+                resimDosyasi.disabled = true;
+            } else if (secim === 'dosya') {
+                urlCheckbox.checked = false;
+                resimUrl.disabled = true;
+                resimDosyasi.disabled = false;
+            }
+        }
+    </script>
     <br />
     @Html.LabelFor(x => x.Aciklama)
-    @Html.TextAreaFor(x => x.Aciklama,15,1, new { @class = "form-control" })
+    @Html.TextAreaFor(x => x.Aciklama, 15, 1, new { @class = "form-control" })
     <br />
 
     <button class="btn btn-success">Güncelle</button>

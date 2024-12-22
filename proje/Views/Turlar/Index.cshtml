@@ -4,82 +4,126 @@
     Layout = "~/Views/Shared/_Testlayout.cshtml";
 }
 
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <html>
 
 <head>
-
     <link href="~/web2/css/bootstrap.css" rel='stylesheet' type='text/css' />
-    <link href="~/web2/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="~/web2/css/style.css' rel='stylesheet' type='text/css'  />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Personal Blog Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
-	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!----webfonts---->
     <link href='http://fonts.googleapis.com/css?family=Oswald:100,400,300,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,300italic' rel='stylesheet' type='text/css'>
-
+    <style>
+        .single-grid h4 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <!---header---->
     <div class="header">
         <div class="container">
-
             <!---start-top-nav---->
-
             <div class="clearfix"></div>
-
             <!---//End-top-nav---->
         </div>
     </div>
     <!--/header-->
     <div class="single">
         <div class="container">
-            <div class="col-md-8 single-main">
-                @foreach (var x in Model.Deger1)
-                {
-                    <div class="single-grid">
-                        <img src="@x.Resim" alt="" style="margin-bottom:20px" />
-                        <a href="/Turlar/TurDetay/@x.Id "> @x.Baslik </a>
-                        <p> @x.Aciklama.Substring(0, 500) </p>
-                        <p><a href="/Turlar/TurDetay/@x.Id"><span class="read">Daha Fazlası >></span></a></p>
-                    </div>
-                    <br /> <br />
-                }
-
-            </div>
-
-            <div class="col-md-4 side-content">
-                <div class="recent">
-                    <h3>Son Turlar</h3>
-                    @foreach (var y in Model.Deger3)
+            <div class="row">
+                <div class="col-md-3 side-content">
+                    @using (Html.BeginForm("Index", "Turlar", FormMethod.Get))
                     {
-                        <ul>
-                            <li><a href="/Turlar/TurDetay/@y.Id">@y.Baslik</a></li>
-                        </ul>
+                        <div class="search-form">
+                            <h3>Arama</h3>
+                            <p>
+                                Tur ismi: @Html.TextBox("p", null, new { @class = "form-control" })
+                            </p>
+                            <p>
+                                Başlangıç Tarihi: @Html.TextBox("startDate", "", new { @type = "date", @class = "form-control" })
+                            </p>
+                            <p>
+                                Etiketler:
+                                <div>
+                                    <label>@Html.CheckBox("etiket", new { value = "spor" }) Spor</label>
+                                </div>
+                                <div>
+                                    <label>@Html.CheckBox("etiket", new { value = "tarih" }) Tarih</label>
+                                </div>
+                                <div>
+                                    <label>@Html.CheckBox("etiket", new { value = "alisveris" }) Alışveriş</label>
+                                </div>
+                                <div>
+                                    <label>@Html.CheckBox("etiket", new { value = "hizli" }) Hızlı</label>
+                                </div>
+                                <div>
+                                    <label>@Html.CheckBox("etiket", new { value = "doga" }) Doğa</label>
+                                </div>
+                            </p>
+
+                            <p>
+                                <input type="submit" value="Ara" class="btn btn-primary" />
+                            </p>
+                        </div>
                     }
                 </div>
-                @using (Html.BeginForm("Index","Turlar",FormMethod.Post))
-            {
-                <p>
-                    Tur ismi:@Html.TextBox("p")
-                    <input type="submit" value="Find" />
-                </p>
-            }
+
+                <div class="col-md-6 single-main">
+                    @foreach (var x in Model.Deger1)
+                    {
+                        <div class="single-grid">
+                            <img src="@x.Resim" alt="" style="margin-bottom:20px" />
+                            <h4><a href="/Turlar/TurDetay/@x.Id "> @x.Baslik </a></h4> <span>(@x.BaslangicTarihi.ToString("dd/MM/yyyy") - @x.BitisTarihi.ToString("dd/MM/yyyy"))</span>
+                            <p> <span >Kontenjan -></span> @x.Kontenjan </p>
+                            <p> @x.Aciklama.Substring(0, 500) </p>
+                            <p><a href="/Turlar/TurDetay/@x.Id"><span class="read">Daha Fazlası >></span></a></p>
+                        </div>
+                        <br /> <br />
+                    }
+
+                    
+                    <div class="pagination">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <a href="@Url.Action("Index", new { page = ViewBag.CurrentPage - 1 })">Önceki</a>
+                        }
+
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            <a href="@Url.Action("Index", new { page = i })" class="@(i == ViewBag.CurrentPage ? "active" : "")">@i</a>
+                        }
+
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <a href="@Url.Action("Index", new { page = ViewBag.CurrentPage + 1 })">Sonraki</a>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-3 side-content">
+                    <div class="recent">
+                        <h3>Son Turlar</h3>
+                        @foreach (var y in Model.Deger3)
+                        {
+                            <ul>
+                                <li><a href="/Turlar/TurDetay/@y.Id">@y.Baslik</a></li>
+                            </ul>
+                        }
+                    </div>
+                </div>
             </div>
+
             <div class="clearfix"></div>
-            
         </div>
     </div>
 
-    <!---->
 </body>
 </html>
-
