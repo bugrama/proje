@@ -123,7 +123,6 @@
     <Compile Include="Controllers\GirisyapController.cs" />
     <Compile Include="Controllers\TurlarController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -131,9 +130,14 @@
     <Compile Include="Migrations\202412221204475_AddSiparislerKey.Designer.cs">
       <DependentUpon>202412221204475_AddSiparislerKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202501111646127_InitialCreate.cs" />
+    <Compile Include="Migrations\202501111646127_InitialCreate.Designer.cs">
+      <DependentUpon>202501111646127_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Siniflar\Admin.cs" />
     <Compile Include="Models\Siniflar\Adresblog.cs" />
+    <Compile Include="Models\Siniflar\AlinanSiparisler.cs" />
     <Compile Include="Models\Siniflar\Anasayfa.cs" />
     <Compile Include="Models\Siniflar\Siparisler.cs" />
     <Compile Include="Models\Siniflar\Context.cs" />
@@ -252,12 +256,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Testlayout.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
-    <Content Include="Views\Default\About.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Turlar\Index.cshtml" />
     <Content Include="Views\Turlar\TurDetay.cshtml" />
@@ -277,6 +277,7 @@
     <Content Include="weblogin\fonts\Audiowide-Regular.ttf" />
     <Content Include="Views\Girisyap\Login.cshtml" />
     <Content Include="Views\Admin\Siparislistesi.cshtml" />
+    <Content Include="Views\Admin\alinanSiparisler.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -312,6 +313,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202412221204475_AddSiparislerKey.resx">
       <DependentUpon>202412221204475_AddSiparislerKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501111646127_InitialCreate.resx">
+      <DependentUpon>202501111646127_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

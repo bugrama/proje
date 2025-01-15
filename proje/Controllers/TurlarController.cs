@@ -10,9 +10,7 @@ namespace proje.Controllers
     {
         Context c = new Context();
         TurYorum ty = new TurYorum();
-
-
-
+        
         
 
         public ActionResult Index(string p, DateTime? startDate, string[] etiket, int page = 1)

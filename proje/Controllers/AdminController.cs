@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿    using proje.Models;
+using proje.Models.Siniflar;
+using System;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using proje.Models.Siniflar;
 
 namespace proje.Controllers
 {
@@ -104,6 +104,36 @@ namespace proje.Controllers
             return RedirectToAction("Siparislistesi");
         }
 
+        public ActionResult alinanSiparisler()
+        {
+            var alinanSiparisler = c.AlinanSiparislers.ToList();
+            return View(alinanSiparisler);
+        }
+
+        public ActionResult AlinanSiparisRet(int id)
+        {
+            var alinanSiparis = c.AlinanSiparislers.Find(id);
+            if (alinanSiparis != null)
+            {
+                var tur = c.Turlars.Find(alinanSiparis.TurId);
+                if (tur != null)
+                {
+                    tur.Kontenjan += alinanSiparis.Kisi;
+                }
+                c.AlinanSiparislers.Remove(alinanSiparis);
+                c.SaveChanges();
+            }
+            return RedirectToAction("alinanSiparisler");
+        }
+
+        public ActionResult AlinanSiparisSil(int id)
+        {
+            var y = c.AlinanSiparislers.Find(id);
+            c.AlinanSiparislers.Remove(y);
+            c.SaveChanges();
+            return RedirectToAction("alinanSiparisler");
+        }
+
         [HttpPost]
         public ActionResult SiparisOnayla(int id)
         {
@@ -116,6 +146,17 @@ namespace proje.Controllers
                     if (tur.Kontenjan >= siparis.Kisi)
                     {
                         tur.Kontenjan -= siparis.Kisi;
+                        var alinanSiparis = new AlinanSiparisler
+                        {
+                            Id = siparis.Id,
+                            TurId = siparis.TurId,
+                            Isim = siparis.Isim,
+                            Email = siparis.Email,
+                            Telefon = siparis.Telefon,
+                            Kisi = siparis.Kisi,
+                            
+                        };
+                        c.AlinanSiparislers.Add(alinanSiparis);
                         c.Siparislers.Remove(siparis);
                         c.SaveChanges();
                         return Json(new { success = true });

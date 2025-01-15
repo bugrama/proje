@@ -1,0 +1,47 @@
+﻿@using proje.Models.Siniflar
+@model List<proje.Models.AlinanSiparisler>
+@{
+    ViewBag.Title = "Siparislistesi";
+    Layout = "~/Views/Shared/_Adminlayout.cshtml";
+    var selectedTurId = Request.QueryString["turId"];
+    var turIdList = Model.Select(s => s.TurId).Distinct().ToList();
+}
+
+<h2>Alınan Siparis listesi</h2>
+
+<form method="get" action="">
+    <label for="turId">Tur Id Seçin:</label>
+    <select id="turId" name="turId" onchange="this.form.submit()">
+        <option value="">Hepsi</option>
+        @foreach (var turId in turIdList)
+        {
+            <option value="@turId" @(selectedTurId == turId.ToString() ? "selected" : "")>@turId</option>
+        }
+    </select>
+</form>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Tur id</th>
+        <th>İsim</th>
+        <th>Email</th>
+        <th>Telefon</th>
+        <th>Kişi sayısı</th>
+        <th>Redded</th>
+        <th>Sil</th>
+    </tr>
+    @foreach (var siparis in Model.Where(s => string.IsNullOrEmpty(selectedTurId) || s.TurId.ToString() == selectedTurId).OrderBy(s => s.TurId))
+    {
+        <tr>
+            <td>@siparis.Id</td>
+            <td>@siparis.TurId</td>
+            <td>@siparis.Isim</td>
+            <td>@siparis.Email</td>
+            <td>@siparis.Telefon</td>
+            <td>@siparis.Kisi</td>
+            <td><a href="/Admin/AlinanSiparisRet/@siparis.Id" class="btn btn-danger">Redded</a></td>
+            <td><a href="/Admin/AlinanSiparisSil/@siparis.Id" class="btn btn-danger">Sil</a></td>
+        </tr>
+    }
+</table>

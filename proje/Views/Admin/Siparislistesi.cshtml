@@ -3,10 +3,22 @@
 @{
     ViewBag.Title = "Siparislistesi";
     Layout = "~/Views/Shared/_Adminlayout.cshtml";
+    var selectedTurId = Request.QueryString["turId"];
+    var turIdList = Model.Select(s => s.TurId).Distinct().ToList();
 }
 
-<h2>Siparislistesi</h2>
+<h2>Siparis listesi</h2>
 
+<form method="get" action="">
+    <label for="turId">Tur Id Seçin:</label>
+    <select id="turId" name="turId" onchange="this.form.submit()">
+        <option value="">Hepsi</option>
+        @foreach (var turId in turIdList)
+        {
+            <option value="@turId" @(selectedTurId == turId.ToString() ? "selected" : "")>@turId</option>
+        }
+    </select>
+</form>
 
 <table class="table table-bordered">
     <tr>
@@ -16,10 +28,10 @@
         <th>Email</th>
         <th>Telefon</th>
         <th>Kişi sayısı</th>
-        <th>Güncelle</th>
-        <th>Sil</th>
+        <th>Onayla</th>
+        <th>Redded</th>
     </tr>
-    @foreach (var x in Model)
+    @foreach (var x in Model.Where(s => string.IsNullOrEmpty(selectedTurId) || s.TurId.ToString() == selectedTurId).OrderBy(s => s.TurId))
     {
         <tr>
             <td>@x.Id</td>
@@ -30,7 +42,6 @@
             <td>@x.Kisi</td>
             <td><button class="btn btn-warning" onclick="onaylaSiparis(@x.Id)">Onayla</button></td>
             <td><a href="/Admin/SiparisSil/@x.Id" class="btn btn-danger">Redded</a></td>
-
         </tr>
     }
 </table>

@@ -15,6 +15,7 @@ namespace proje.Models.Siniflar
         public DbSet<İletisim> İletisims { get; set; }   
         public DbSet<Yorumlar> Yorumlars { get; set; }    
         public DbSet<Siparisler> Siparislers { get; set; }   
+        public DbSet<AlinanSiparisler> AlinanSiparislers { get; set; }
 
     }
 }

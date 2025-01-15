@@ -9,7 +9,7 @@ namespace proje.Controllers
 {
     public class DefaultController : Controller
     {
-        // GET: Default
+        
         Context c = new Context();
         public ActionResult Index()
         {

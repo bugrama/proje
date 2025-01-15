@@ -10,7 +10,7 @@ namespace proje.Controllers
 
     public class GirisyapController : Controller
     {
-        // GET: Girisyap
+        
         Context c = new Context();
         public ActionResult Login()
         {
